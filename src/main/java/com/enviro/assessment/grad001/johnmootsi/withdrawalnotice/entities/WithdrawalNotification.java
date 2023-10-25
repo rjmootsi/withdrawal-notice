@@ -31,7 +31,7 @@ public class WithdrawalNotification {
     // Relationship properties
 
     // many-to-one relationship, as multiple notifications can be associated with a single investor.
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER) // to fetch the investor when notification is requested
     @JoinColumn(name = "investor_id", referencedColumnName = "investor_id")
     private Investor investor; // The investor who received the notification.
 
