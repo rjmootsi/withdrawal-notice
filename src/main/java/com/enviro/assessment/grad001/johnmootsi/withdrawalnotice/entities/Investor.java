@@ -2,26 +2,49 @@ package com.enviro.assessment.grad001.johnmootsi.withdrawalnotice.entities;
 
 // The Investor entity will represent an investor in your system.
 
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "investors")
 public class Investor {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "investor_id", nullable = false)
     private Long investorId;
+    @Basic
+    @Column(name = "investor_name", nullable = false, length = 45)
     private String investorName;
+    @Basic
+    @Column(name = "investor_lastname", nullable = false, length = 45)
     private String investorLastname;
+    @Basic
+    @Column(name = "investor_age", nullable = false)
     private int investorAge;
+    @Basic
+    @Column(name = "investor_address", nullable = false)
     private String address;
+    @Basic
+    @Column(name = "investor_contact", nullable = false, length = 45)
     private String contact;
 
     // Relationship properties
 
-    // A list of Product entities that the investor has invested in.
-    private Set<Product> products = new HashSet<>(); // one to many as an investor can have multiple products.
+    // one to many as an investor can have multiple products.
+    @OneToMany(mappedBy = "investor", fetch = FetchType.LAZY)
+    private Set<Product> products = new HashSet<>(); // A list of Product entities that the investor has invested in.
 
-    // A list of Withdrawal entities that the investor has made.
-    private Set<Withdrawal> withdrawals = new HashSet<>(); // one to many as an investor can make multiple withdrawals.
+    // one to many as an investor can make multiple withdrawals.
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "investor_withdrawals",
+            joinColumns = {@JoinColumn(name = "investor_id")},
+            inverseJoinColumns = {@JoinColumn(name = "withdrawals_id")}) // adds both primary keys into the new table that manages withdrawals and investors
+    private Set<Withdrawal> withdrawals = new HashSet<>(); // A list of Withdrawal entities that the investor has made.
 
 
     public Investor() {

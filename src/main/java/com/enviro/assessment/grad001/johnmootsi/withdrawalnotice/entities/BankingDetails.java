@@ -2,19 +2,37 @@ package com.enviro.assessment.grad001.johnmootsi.withdrawalnotice.entities;
 
 // The BankingDetails entity represents the banking details where the withdrawal amount will be paid into.
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
+@Table(name = "banking_details")
 public class BankingDetails {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "banking_details_id", nullable = false)
     private Long bankingDetailsId;
+    @Basic
+    @Column(name = "branch_code", nullable = false)
     private Long branchCode;
+    @Basic
+    @Column(name = "bank_name", nullable = false, length = 45)
     private String bankName;
+    @Basic
+    @Column(name = "account_holder_name", nullable = false, length = 45)
     private String accountHolderName;
+    @Basic
+    @Column(name = "account_number", nullable = false)
     private Long accountNumber;
 
     // Relationship properties
 
-    // The withdrawal associated with these banking details.
-    private Withdrawal withdrawal; // one-to-one relationship, as each withdrawal has a single set of banking details.
+    // one-to-one relationship, as each withdrawal has a single set of banking details.
+    @OneToOne(cascade = CascadeType.REMOVE) // remove the banking details if withdrawals is removed
+    @JoinColumn(name = "withdrawal_id", referencedColumnName = "withdrawal_id", nullable = false)
+    private Withdrawal withdrawal; // The withdrawal associated with these banking details.
 
 
     public BankingDetails() {

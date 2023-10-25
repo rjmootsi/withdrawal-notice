@@ -2,24 +2,44 @@ package com.enviro.assessment.grad001.johnmootsi.withdrawalnotice.entities;
 
 // The Product entity represents a product that an investor can invest in.
 
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "products")
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id", nullable = false)
     private Long productId;
+    @Basic
+    @Column(name = "product_type", nullable = false, length = 45)
     private String productType;
+    @Basic
+    @Column(name = "product_name", nullable = false, length = 45)
     private String productName;
+    @Basic
+    @Column(name = "current_balance", nullable = false)
     private Double currentBalance;
 
     // Relationship properties
 
-    // The investor who has invested in this product.
-    private Investor investor; // many-to-one relationship, as multiple products can be associated with a single investor.
+    // many-to-one relationship, as multiple products can be associated with a single investor.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "investor_id", referencedColumnName = "investor_id", nullable = false) // to add the foreign key
+    private Investor investor; // The investor who has invested in this product.
 
-    // A list of Withdrawal entities associated with this product.
-    private Set<Withdrawal> withdrawals = new HashSet<>(); // one-to-many relationship, as a product can have multiple withdrawals.
+    // one-to-many relationship, as a product can have multiple withdrawals.
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "product_withdrawals",
+    joinColumns = {@JoinColumn(name = "product_id")},
+    inverseJoinColumns = {@JoinColumn(name = "withdrawals_id")}) // adds both primary keys into the new table that manages withdrawals and products
+    private Set<Withdrawal> withdrawals = new HashSet<>(); // A list of Withdrawal entities associated with this product.
 
 
     public Product() {
