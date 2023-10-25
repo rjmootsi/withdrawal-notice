@@ -2,20 +2,38 @@ package com.enviro.assessment.grad001.johnmootsi.withdrawalnotice.entities;
 
 // The Notification entity represents a notification sent to an investor.
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "withdrawal_notification")
 public class WithdrawalNotification {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "withdrawal_notification_id", nullable = false)
     private Long withdrawalNotificationId;
+    @Basic
+    @Column(name = "balance_before_withdrawal", nullable = false)
     private Double balanceBeforeWithdrawal;
+    @Basic
+    @Column(name = "amount_withdrawn", nullable = false)
     private Double amountWithdrawn;
+    @Basic
+    @Column(name = "closing_balance", nullable = false)
     private Double closingBalance;
+    @Basic
+    @Column(name = "withdrawal_date", nullable = false)
     private Date withdrawalDate;
 
     // Relationship properties
 
-    // The investor who received the notification.
-    private Investor investor; // many-to-one relationship, as multiple notifications can be associated with a single investor.
+    // many-to-one relationship, as multiple notifications can be associated with a single investor.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "investor_id", referencedColumnName = "investor_id")
+    private Investor investor; // The investor who received the notification.
 
 
     public WithdrawalNotification() {
