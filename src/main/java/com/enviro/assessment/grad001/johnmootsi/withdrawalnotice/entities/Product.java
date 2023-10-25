@@ -30,7 +30,7 @@ public class Product {
     // Relationship properties
 
     // many-to-one relationship, as multiple products can be associated with a single investor.
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // doesn't need to view the investor when fetching a product
     @JoinColumn(name = "investor_id", referencedColumnName = "investor_id", nullable = false) // to add the foreign key
     private Investor investor; // The investor who has invested in this product.
 

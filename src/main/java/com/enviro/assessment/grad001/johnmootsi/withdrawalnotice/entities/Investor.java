@@ -30,7 +30,7 @@ public class Investor {
     @Column(name = "investor_address", nullable = false)
     private String address;
     @Basic
-    @Column(name = "investor_contact", nullable = false, length = 45)
+    @Column(name = "investor_contact", nullable = false, length = 45, unique = true)
     private String contact;
 
     // Relationship properties
@@ -43,7 +43,7 @@ public class Investor {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "investor_withdrawals",
             joinColumns = {@JoinColumn(name = "investor_id")},
-            inverseJoinColumns = {@JoinColumn(name = "withdrawals_id")}) // adds both primary keys into the new table that manages withdrawals and investors
+            inverseJoinColumns = {@JoinColumn(name = "withdrawals_id")}) // adds both primary keys into the new association table that manages withdrawals and investors
     private Set<Withdrawal> withdrawals = new HashSet<>(); // A list of Withdrawal entities that the investor has made.
 
 
