@@ -12,11 +12,70 @@ public class WithdrawalNotification {
     private Double closingBalance;
     private Date withdrawalDate;
 
-//    // Relationship properties
-//
-//    // The investor who received the notification.
-//    private Investor investor; // many-to-one relationship, as multiple notifications can be associated with a single investor.
+    // Relationship properties
 
+    // The investor who received the notification.
+    private Investor investor; // many-to-one relationship, as multiple notifications can be associated with a single investor.
+
+
+    public WithdrawalNotification() {
+    }
+
+    public WithdrawalNotification(Double balanceBeforeWithdrawal, Double amountWithdrawn, Double closingBalance, Date withdrawalDate, Investor investor) {
+        this.balanceBeforeWithdrawal = balanceBeforeWithdrawal;
+        this.amountWithdrawn = amountWithdrawn;
+        this.closingBalance = closingBalance;
+        this.withdrawalDate = withdrawalDate;
+        this.investor = investor;
+    }
+
+    public Long getWithdrawalNotificationId() {
+        return withdrawalNotificationId;
+    }
+
+    public void setWithdrawalNotificationId(Long withdrawalNotificationId) {
+        this.withdrawalNotificationId = withdrawalNotificationId;
+    }
+
+    public Double getBalanceBeforeWithdrawal() {
+        return balanceBeforeWithdrawal;
+    }
+
+    public void setBalanceBeforeWithdrawal(Double balanceBeforeWithdrawal) {
+        this.balanceBeforeWithdrawal = balanceBeforeWithdrawal;
+    }
+
+    public Double getAmountWithdrawn() {
+        return amountWithdrawn;
+    }
+
+    public void setAmountWithdrawn(Double amountWithdrawn) {
+        this.amountWithdrawn = amountWithdrawn;
+    }
+
+    public Double getClosingBalance() {
+        return closingBalance;
+    }
+
+    public void setClosingBalance(Double closingBalance) {
+        this.closingBalance = closingBalance;
+    }
+
+    public Date getWithdrawalDate() {
+        return withdrawalDate;
+    }
+
+    public void setWithdrawalDate(Date withdrawalDate) {
+        this.withdrawalDate = withdrawalDate;
+    }
+
+    public Investor getInvestor() {
+        return investor;
+    }
+
+    public void setInvestor(Investor investor) {
+        this.investor = investor;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -29,5 +88,16 @@ public class WithdrawalNotification {
     @Override
     public int hashCode() {
         return Objects.hash(withdrawalNotificationId, balanceBeforeWithdrawal, amountWithdrawn, closingBalance, withdrawalDate);
+    }
+
+    @Override
+    public String toString() {
+        return "WithdrawalNotification{" +
+                "withdrawalNotificationId=" + withdrawalNotificationId +
+                ", balanceBeforeWithdrawal=" + balanceBeforeWithdrawal +
+                ", amountWithdrawn=" + amountWithdrawn +
+                ", closingBalance=" + closingBalance +
+                ", withdrawalDate=" + withdrawalDate +
+                '}';
     }
 }
